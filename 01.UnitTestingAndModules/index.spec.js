@@ -2,19 +2,16 @@ const lib = require('./index');
 const expect = require('chai').expect;
 
 describe('Sum Tests', function () {
-
     it('should return NaN when the arg is a strings', function () {
         const arg = 'test';
         const result = lib.sum(arg);
         expect(result).to.be.NaN;
     });
-
     it('should return the sum of all items of a valid number string array', function () {
         const arg = [ '1', '2', '3' ];
         const result = lib.sum(arg);
         expect(result).to.eq(6);
     });
-
     it('should return NaN if any we have an invalid number string', function () {
         const arg = [ '1', '2', 'asdfg' ];
         const result = lib.sum(arg);
@@ -22,27 +19,23 @@ describe('Sum Tests', function () {
     });
 });
 
-
 describe('isSymmetric Tests', function () {
     it('should be false when input is not an array', function () {
         const input = 'asdf';
         const result = lib.isSymmetric(input);
         expect(result).to.be.false;
     });
-
     it('should not be symmetric', function () {
         const input = [ 1, 2, 3 ];
         const result = lib.isSymmetric(input);
         expect(result).to.be.false;
     });
-
     it('should be symmetric', function () {
         const input = [ 1, 2, 1 ];
         const result = lib.isSymmetric(input);
         expect(result).to.be.true;
     });
 });
-
 
 describe('rgbToHexColor Tests', function () {
     it('should return undefined when first args are not an int', function () {
@@ -67,7 +60,6 @@ describe('rgbToHexColor Tests', function () {
     });
 });
 
-
 describe('createCalculator Tests', function () {
     it('should create calculator successfully', function () {
         const result = lib.createCalculator();
@@ -85,5 +77,4 @@ describe('createCalculator Tests', function () {
         result.subtract(5);
         expect(result.get()).to.eq(10);
     });
-
 });
