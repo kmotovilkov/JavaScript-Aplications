@@ -6,25 +6,25 @@ function getInfo() {
 
     if (!validBusesID.includes((stopID.value))) {
         stopName.innerHTML = "Error!";
-        buses.innerHTML="";
+        buses.innerHTML = "";
+        stopID.value = "";
         return;
     }
     const url = `https://judgetests.firebaseio.com/businfo/${stopID.value}.json`;
     fetch(url)
         .then(function (response) {
-            response.json()
-                .then(function (data) {
+            return response.json()
 
-                    stopName.innerHTML = data.name;
+        }).then(function (data) {
 
-                    Object.keys(data.buses).forEach(function (key) {
-                        let li = document.createElement('li');
-                        li.innerHTML = `Bus ${key} arrives in ${data.buses[key]} minutes`
-                        buses.appendChild(li);
-                    });
+        stopName.innerHTML = data.name;
 
-                    stopID.innerHTML = "";
-                });
+        Object.keys(data.buses).forEach(function (key) {
+            let li = document.createElement('li');
+            li.innerHTML = `Bus ${key} arrives in ${data.buses[key]} minutes`
+            buses.appendChild(li);
         });
+    });
+
     stopID.value = "";
 }

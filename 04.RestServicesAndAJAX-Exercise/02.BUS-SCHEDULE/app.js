@@ -20,14 +20,14 @@ function solve() {
         const url = baseURL + stopID + '.json';
         fetch(url)
             .then(function (response) {
-                response.json()
-                    .then(function (data) {
-                        info.innerText = `Next stop ${data.name}`;
-                        stopID = data.next;
-                        stopName = data.name;
-                        info.style.fontSize = '1.2em';
-                    });
-            });
+                return response.json()
+
+            }).then(function (data) {
+            info.innerText = `Next stop ${data.name}`;
+            stopID = data.next;
+            stopName = data.name;
+            info.style.fontSize = '1.2em';
+        });
         changeBtn();
     }
 
