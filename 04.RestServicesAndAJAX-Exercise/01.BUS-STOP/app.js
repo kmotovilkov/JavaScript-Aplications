@@ -6,6 +6,7 @@ function getInfo() {
 
     if (!validBusesID.includes((stopID.value))) {
         stopName.innerHTML = "Error!";
+        buses.innerHTML="";
         return;
     }
     const url = `https://judgetests.firebaseio.com/businfo/${stopID.value}.json`;
