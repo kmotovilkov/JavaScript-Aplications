@@ -7,7 +7,6 @@ function attachEvents(values) {
     let postTitleEl = document.getElementById('post-title');
     let postBodyEl = document.getElementById('post-body');
 
-
     loadPostsEl.addEventListener('click', () => {
         // posts.innerHTML = `<option value=""  disabled selected> Select post ...</option>`;
 
@@ -35,14 +34,11 @@ function attachEvents(values) {
             Object.entries(currentPost.comments || {}).forEach(([key, value]) => {
                 let li = document.createElement('li');
 
-
                 li.innerText = value.text;
                 postComentsUl.appendChild(li);
             });
 
-
         });
-
 
     });
 
