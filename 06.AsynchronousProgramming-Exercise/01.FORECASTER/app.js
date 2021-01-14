@@ -4,6 +4,7 @@ function attachEvents() {
     let inputLocation = document.getElementById("location");
     let currentDiv = document.getElementById("current");
     let forecastParentDiv = document.getElementById("forecast");
+    let upcomingDiv = document.getElementById("upcoming");
 
     const symbols =
         {
@@ -26,35 +27,11 @@ function attachEvents() {
                     .then(rec => rec.json());
 
                 Promise.all([currentWether, upcomingWether])
-                    .then(([currentData, upcomingData]) => {
-                        let forecastDiv = createElement("div", "forecasts", "");
-
-                        let currentSymbol = symbols[currentData.forecast.condition];
-
-                        console.log(currentSymbol);
-                        let conditionSymbolSpan = createElement("span", "condition symbol", currentSymbol);
-                        let conditionInfoSpan = createElement("span", "condition", "");
-
-                        let forecastCitySpan = createElement("span", "forecast-data", currentData.name);
-
-                        let highLow = `${currentData.forecast.low}${symbols.Degrees}/${currentData.forecast.high}${symbols.Degrees}`;
-                        let forecastInfoSpan = createElement("span", "forecast-data", highLow);
-
-                        let forecastCounditionSpan = createElement("span", "forecast-data", currentData.forecast.condition)
-
-                        forecastDiv.appendChild(conditionSymbolSpan);
-                        currentDiv.appendChild(forecastDiv);
-                        conditionInfoSpan.appendChild(forecastCitySpan);
-                        conditionInfoSpan.appendChild(forecastInfoSpan);
-                        conditionInfoSpan.appendChild(forecastCounditionSpan);
-                        forecastDiv.appendChild(conditionInfoSpan);
-
-                        forecastParentDiv.style.display = "block";
-
-
-                    }).catch(error => console.log(error));
+                    .then(showForecast)
+                    .catch((error) => {
+                        forecastParentDiv.textContent = "ERROR!";
+                    });
             });
-
     });
 
     function createElement(el, classes, content) {
@@ -63,6 +40,63 @@ function attachEvents() {
         element.innerHTML = content;
 
         return element;
+    }
+
+    function showForecast([currentData, upcomingData]) {
+        forecastParentDiv.style.display = "block";
+        showCurrent(currentData);
+        showUpcoming(upcomingData);
+    }
+
+    function showCurrent(currentData) {
+        let forecastDiv = createElement("div", "forecasts", "");
+
+        let currentSymbol = symbols[currentData.forecast.condition];
+
+
+        let conditionSymbolSpan = createElement("span", "condition symbol", currentSymbol);
+        let conditionInfoSpan = createElement("span", "condition", "");
+
+        let forecastCitySpan = createElement("span", "forecast-data", currentData.name);
+
+        let highLow =
+            `${currentData.forecast.low}${symbols.Degrees}/${currentData.forecast.high}${symbols.Degrees}`;
+        let forecastInfoSpan = createElement("span", "forecast-data", highLow);
+
+        let forecastCounditionSpan =
+            createElement("span", "forecast-data", currentData.forecast.condition);
+
+        forecastDiv.appendChild(conditionSymbolSpan);
+        currentDiv.appendChild(forecastDiv);
+        conditionInfoSpan.appendChild(forecastCitySpan);
+        conditionInfoSpan.appendChild(forecastInfoSpan);
+        conditionInfoSpan.appendChild(forecastCounditionSpan);
+        forecastDiv.appendChild(conditionInfoSpan);
+
+        forecastParentDiv.style.display = "block";
+    }
+
+    function showUpcoming(upcomingData) {
+        let forecastInfoDiv = createElement("div", "forecast-info", "");
+
+        upcomingData.forecast.forEach(obj => {
+            let upcomingSpan = createElement("span", "upcoming", "");
+            let conditionSymbolSpan = createElement("span", "symbol", symbols[obj.condition]);
+
+            let highLow =
+                `${obj.low}${symbols.Degrees}/${obj.high}${symbols.Degrees}`;
+            let forecastInfoSpan = createElement("span", "forecast-data", highLow);
+
+            let forecastCounditionSpan =
+                createElement("span", "forecast-data", obj.condition);
+
+            upcomingSpan.appendChild(conditionSymbolSpan);
+            upcomingSpan.appendChild(forecastInfoSpan);
+            upcomingSpan.appendChild(forecastCounditionSpan);
+            forecastInfoDiv.appendChild(upcomingSpan);
+        });
+
+        upcomingDiv.appendChild(forecastInfoDiv);
     }
 }
 
