@@ -85,7 +85,7 @@ function attachEvents() {
                 captureTime: captureTimeInput.value
             });
 
-            fetch(updateUrl, {method: "PUT", body: obj});
+            fetch(updateUrl,{method: "PUT", body:obj});
 
         });
 
