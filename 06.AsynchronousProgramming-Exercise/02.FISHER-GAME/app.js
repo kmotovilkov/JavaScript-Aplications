@@ -1,11 +1,10 @@
 function attachEvents() {
     const addBtn = document.querySelector("button.add");
     const loadBtn = document.querySelector("button.load");
-    // const updateBtn = document.querySelector("button.update");
-    // const deleteBtn = document.querySelector("button.delete");
     const catchesDiv = document.getElementById("catches");
 
     const baseUrl = "https://fisher-game.firebaseio.com/catches.json";
+    const deleteBaseUrl = "https://fisher-game.firebaseio.com/catches/";
 
     addBtn.addEventListener("click", () => {
 
@@ -26,8 +25,8 @@ function attachEvents() {
         });
 
         fetch(baseUrl, {method: "POST", body: obj})
-            // .then(res => res.json())
-            // .then(data => console.log(data));
+        // .then(res => res.json())
+        // .then(data => console.log(data));
     });
 
     loadBtn.addEventListener("click", () => {
@@ -43,6 +42,8 @@ function attachEvents() {
     function appendCatch(key, data) {
         let {angler, weight, species, location, bait, captureTime} = data[key];
         let catchDiv = createElement("div", "catch", "");
+
+        catchDiv.setAttribute("data-id", key);
 
         let anglerLabel = createElement("label", "", "Angler");
         let anglerInput = createElement("input", "angler", angler, "text");
@@ -65,6 +66,28 @@ function attachEvents() {
         let updateBtn = createElement("button", "update", "Update");
         let deleteBtn = createElement("button", "delete", "Delete");
 
+        deleteBtn.addEventListener("click", () => {
+            let deleteUrl = deleteBaseUrl + key + ".json";
+            fetch(deleteUrl, {method: "DELETE"})
+            // .then(res => res.json()).then(res => console.log(res));
+        });
+
+        updateBtn.addEventListener("click", (e) => {
+
+            let updateUrl = deleteBaseUrl + key + ".json";
+
+            let obj = JSON.stringify({
+                angler: anglerInput.value,
+                weight: weightInput.value,
+                species: speciesInput.value,
+                location: locationInput.value,
+                bait: baitInput.value,
+                captureTime: captureTimeInput.value
+            });
+
+            fetch(updateUrl, {method: "PUT", body: obj});
+
+        });
 
         catchDiv.appendChild(anglerLabel);
         catchDiv.appendChild(anglerInput);
