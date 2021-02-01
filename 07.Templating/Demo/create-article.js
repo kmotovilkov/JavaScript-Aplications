@@ -9,6 +9,7 @@ const createArticle = (data) => `
                     <p>Author: ${data.author}</p>
                 </footer>
             </header>
+            </article>
 `;
 
 export default createArticle;

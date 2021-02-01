@@ -13,25 +13,28 @@
 
     </div>
 </div>
+<script id="article-template" type="text/x-handlebars-template">
+    <article class="article-item">
+        <header>
+            <h3>{{title}}</h3>
+            <section>
+                <p>{{body}}</p>
+            </section>
+            {{#if author}}
+            <footer>
+                <p>Author: {{author}}</p>
+            </footer>
+            {{/if}}
+        </header>
+    </article>
+</script>
+
 <script type="module">
     // import createArticle from "./create-article.js";
     import articles from "./articles.js";
     import Handlebars from 'https://jspm.dev/handlebars';
 
-    const articleView = `
- <article class="article-item">
-            <header>
-                <h3>{{title}}</h3>
-                <section>
-                    <p>{{body}}</p>
-                </section>
-                {{#if author}}
-                <footer>
-                    <p>Author: {{author}}</p>
-                </footer>
-                {{/if}}
-            </header>
-`;
+    const articleView=document.getElementById("article-template").innerHTML;
     const articleTemplate = Handlebars.compile(articleView);
 
     const articlesListEl = document.getElementById("articles");
