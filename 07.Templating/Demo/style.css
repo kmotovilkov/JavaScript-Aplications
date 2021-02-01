@@ -1,0 +1,9 @@
+body{
+    font-family: "Raleway", arial, sans-serif;
+    font-size: 11px;
+}
+
+.site-wrapper{
+    width: 800px;
+    margin: auto;
+}

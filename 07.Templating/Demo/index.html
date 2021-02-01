@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Articles</title>
+</head>
+<body>
+<div class="site-wrapper">
+    <h1>Articles</h1>
+    <div id="articles">
+
+    </div>
+</div>
+<script type="module">
+    // import createArticle from "./create-article.js";
+    import articles from "./articles.js";
+    import Handlebars from 'https://jspm.dev/handlebars';
+
+    const articleView = `
+ <article class="article-item">
+            <header>
+                <h3>{{title}}</h3>
+                <section>
+                    <p>{{body}}</p>
+                </section>
+                {{#if author}}
+                <footer>
+                    <p>Author: {{author}}</p>
+                </footer>
+                {{/if}}
+            </header>
+`;
+    const articleTemplate = Handlebars.compile(articleView);
+
+    const articlesListEl = document.getElementById("articles");
+    let articlesHtml = articles.map(art => articleTemplate(art)).join("");
+
+    articlesListEl.innerHTML = articlesHtml;
+</script>
+
+</body>
+</html>
