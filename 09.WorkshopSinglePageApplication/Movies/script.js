@@ -1,13 +1,16 @@
-function addEventListeners() {
-    document.querySelector(".navigation").addEventListener("click", e => {
-        e.preventDefault();
+const routes = {
+    "/": "home-template",
+    "login": "login-form-template",
+    "register": "register-form-template",
+};
+const router = (path) => {
+    let app = document.getElementById("app");
+    let template = Handlebars.compile(document.getElementById(routes[path]).innerHTML);
 
-        if (!e.target.classList.contains("nav-link")) {
-            return;
-        }
-        let url=new URL(e.target.href)
-        history.pushState({}, "", url.pathname);
-    });
+    app.innerHTML = template();
+};
+
+const navigate = (path) => {
+    history.pushState({}, "", path);
+    router(path);
 }
-
-addEventListeners();
