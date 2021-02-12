@@ -1,5 +1,8 @@
 function addEventListeners() {
-    document.querySelector(".navigation").addEventListener("click", navigateHandler);
+    let navigationTemplate = Handlebars.compile(document.getElementById("navigation-template").innerHTML);
+    Handlebars.registerPartial("navigation-template", navigationTemplate);
+    navigate("home");
+    // document.querySelector(".navigation").addEventListener("click", navigateHandler);
 }
 
 
@@ -20,9 +23,9 @@ function onLoginSubmit(e) {
     let email = formData.get("email");
     let password = formData.get("password");
 
-    authServices.login(email, password)
-        .then(data =>{
-            navigate("/");
+    authService.login(email, password)
+        .then(data => {
+            navigate("home");
         });
 }
 

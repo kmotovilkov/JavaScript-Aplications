@@ -1,7 +1,7 @@
 const apiKey = "AIzaSyB_Dpl6Z1XPnM4PEzRI_bNCX1GxNuSjl9c";
 
-const authServices = {
-   async login(email, password) {
+const authService = {
+    async login(email, password) {
 
         let response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, {
             method: "POST",
@@ -12,11 +12,30 @@ const authServices = {
                 email, password,
             })
         });
-        let data=await response.json();
+        let data = await response.json();
 
-                localStorage.setItem("auth",JSON.stringify(data));
+        localStorage.setItem("auth", JSON.stringify(data));
 
-                return data;
+        return data;
 
-            }
+    },
+    getData() {
+        try {
+            let data = JSON.parse(localStorage.getItem("auth"));
+            return {
+                isAuthenticated: Boolean(data.idToken),
+                email: data.email
+            };
+
+
+        } catch (error) {
+            return {
+                isAuthenticated: false,
+                email: ""
+            };
+        }
+    },
+    logout() {
+        localStorage.setItem("auth", "");
+    }
 };
