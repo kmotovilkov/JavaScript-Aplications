@@ -3,8 +3,10 @@ const routes = {
     "login": "login-form-template",
     "register": "register-form-template",
     "add-movie": "add-movie-template",
+    "details": "movie-details-template",
 };
-const router =async (path) => {
+const router =async (pathName) => {
+    let [path, id]=pathName.split("/");
     let app = document.getElementById("app");
     let templateData = authService.getData();
 
@@ -15,6 +17,10 @@ const router =async (path) => {
         case "logout":
             authService.logout();
             return navigate("home");
+        case "details":
+            let movieDetails= await movieService.getOne(id);
+            Object.assign(templateData,movieDetails);
+            break;
         default:
             break;
     }

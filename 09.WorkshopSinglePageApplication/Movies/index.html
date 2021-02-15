@@ -181,22 +181,22 @@
             <h4 class="card-title">{{title}}</h4>
         </div>
         <div class="card-footer">
-            <a href="#/details/6lOxMFSMkML09wux6sAF">
-                <button type="button" class="btn btn-info">Details</button>
+
+                <button type="button" class="btn btn-info"> <a href="/details/{{key}}" onclick="navigateHandler(event)" id="white">Details</button>
             </a>
         </div>
 
     </div>
 </script>
 
-<script type="text/x-handlebars-template" id="movie-card-template">
+<script type="text/x-handlebars-template" id="movie-details-template">
+    {{>navigation-template}}
     <div class="container">
         <div class="row bg-light text-dark">
             <h1>Movie title: {{title}}</h1>
 
             <div class="col-md-8">
-                <img class="img-thumbnail" src="{{imageUrl}}"
-                     alt="{{title}}">
+                <img class="img-thumbnail" src="{{imageUrl}}" alt="{{title}}">
             </div>
             <div class="col-md-4 text-center">
                 <h3 class="my-3 ">Movie Description</h3>
